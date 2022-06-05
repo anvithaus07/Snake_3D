@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +12,8 @@ namespace Snake3D
         public static GameManager Instance;
         private bool _hasGameStarted;
         private bool _hasGameEnded;
+
+        public Action OnGameEnded; 
 
         private void Awake()
         {
@@ -30,6 +32,11 @@ namespace Snake3D
             m_gameUIHandler.ShowGameStartCountDown(3);
             m_snakeHandler.InitailizeSnake();
             m_foodHandler.CalculaterPositionAndSpawnFood();
+        }
+
+        public void EndGame()
+        {
+            OnGameEnded?.Invoke();
         }
 
         public bool HasGameStarted
@@ -52,6 +59,8 @@ namespace Snake3D
             set
             {
                 _hasGameEnded = value;
+                if (_hasGameEnded)
+                    EndGame();
             }
         }
     }

@@ -10,8 +10,22 @@ namespace Snake3D
         [HideInInspector] public Vector3 MinBoundaryPoint;
         [HideInInspector] public int ScorePerUnitConsumption;
 
+
+
         public abstract void SpawnFood(Action onFoodConsumed);
         public abstract void OnTriggerEnter(Collider collision);
+
+        private void OnEnable()
+        {
+            GameManager.Instance.OnGameEnded += OnGameEnded;
+        }
+
+        private void OnDisable()
+        {
+
+            GameManager.Instance.OnGameEnded -= OnGameEnded;
+
+        }
 
         public void InitializeFoodData(Vector3 minPoint, Vector3 maxPoints, int scorePerUnitConsumption)
         {
@@ -31,6 +45,11 @@ namespace Snake3D
             float zPos = UnityEngine.Random.Range(MinBoundaryPoint.z, MaxBoundaryPoint.z);
 
             return new Vector3(Mathf.Round(xPos),0.0f, Mathf.Round(zPos));
+        }
+
+        void OnGameEnded()
+        {
+            Destroy(this.gameObject);
         }
     }
 
