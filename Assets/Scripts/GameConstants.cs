@@ -17,5 +17,6 @@ namespace Snake3D
         public static string kSinglePlayerGameScene = "GameScene";
         public static string kMultiPlayerGameScene = "";
         public static string kMenuScene = "MainMenuScene";
+        public static string kLobbyScene = "LobbyScene";
     }
 }

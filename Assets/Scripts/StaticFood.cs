@@ -5,6 +5,8 @@ namespace Snake3D
 {
     public class StaticFood : Food
     {
+
+        
         Action OnFoodConsumed;
         public override void OnTriggerEnter(Collider collision)
         {

@@ -9,6 +9,8 @@ namespace Snake3D
     {
         [SerializeField] private Button m_singlePlayerBtn;
         [SerializeField] private Button m_multiPlayerBtn;
+        [SerializeField] private PhotonConnector m_photonConnector;
+        [SerializeField] private LoadingIndicator m_loadingIndicator;
 
         private void OnEnable()
         {
@@ -29,7 +31,8 @@ namespace Snake3D
 
         void OnMultiPlayerBtnClicked()
         {
-            SceneManager.LoadScene(GameConstants.kMultiPlayerGameScene);
+            m_loadingIndicator.ShowLoadingIndiactor("Connecting...");
+            m_photonConnector.ConnectToPhotonNetwork();
         }
     }
 }
