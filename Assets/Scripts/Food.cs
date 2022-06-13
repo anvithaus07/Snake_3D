@@ -1,55 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Snake3D
 {
     public abstract class Food : MonoBehaviour
     {
-        [HideInInspector] public Vector3 MaxBoundaryPoint;
-        [HideInInspector] public Vector3 MinBoundaryPoint;
         [HideInInspector] public int ScorePerUnitConsumption;
-
-
 
         public abstract void SpawnFood(Action onFoodConsumed);
         public abstract void OnTriggerEnter(Collider collision);
 
         private void OnEnable()
         {
-            GameManager.Instance.OnGameEnded += OnGameEnded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void OnDisable()
         {
-
-            GameManager.Instance.OnGameEnded -= OnGameEnded;
-
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        public void InitializeFoodData(Vector3 minPoint, Vector3 maxPoints, int scorePerUnitConsumption)
+        public void InitializeFoodData(int scorePerUnitConsumption)
         {
-            MaxBoundaryPoint = maxPoints;
-            MinBoundaryPoint = minPoint;
             ScorePerUnitConsumption = scorePerUnitConsumption;
         }
 
         public virtual void UpdateScoreOnFoodConsumption()
         {
+            GamePlayController.Instance.DestroyFoodParticle();
             PlayerDataHandler.Instance().CurrentScore += ScorePerUnitConsumption;
-        }
-
-        public Vector3 GetFoodSpawnPosition()
-        {
-            float xPos = UnityEngine.Random.Range(MinBoundaryPoint.x, MaxBoundaryPoint.x);
-            float zPos = UnityEngine.Random.Range(MinBoundaryPoint.z, MaxBoundaryPoint.z);
-
-            return new Vector3(Mathf.Round(xPos),0.0f, Mathf.Round(zPos));
         }
 
         void OnGameEnded()
         {
-            Destroy(this.gameObject);
+            GamePlayController.Instance.DestroyFoodParticle();
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if(scene.name == GameConstants.kMultiPlayerGameScene || scene.name == GameConstants.kSinglePlayerGameScene )
+            {
+                GamePlayController.Instance.OnGameEnded -= OnGameEnded;
+                GamePlayController.Instance.OnGameEnded += OnGameEnded;
+            }
         }
     }
 

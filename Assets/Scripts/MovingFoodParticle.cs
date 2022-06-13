@@ -20,7 +20,6 @@ namespace Snake3D
         public override void SpawnFood(Action onFoodConsumed)
         {
             OnFoodConsumed = onFoodConsumed;
-            transform.position = GetFoodSpawnPosition();
         }
     }
 }

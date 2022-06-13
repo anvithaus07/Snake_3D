@@ -15,6 +15,12 @@ namespace Snake3D
 
         private Vector3 m_playerInputDirection = Vector3.left;
 
+        public static PlayerInputHandler Instance;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
         private void OnEnable()
         {
             m_leftBtn.onClick.AddListener(() => { PlayerInputDirection = Vector3.left; });
@@ -32,7 +38,7 @@ namespace Snake3D
         }
         private void Update()
         {
-            if (!GameManager.Instance.HasGameEnded && GameManager.Instance.HasGameStarted)
+            if (!GamePlayController.Instance.HasGameEnded && GamePlayController.Instance.HasGameStarted)
             {
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                     PlayerInputDirection = Vector3.up;

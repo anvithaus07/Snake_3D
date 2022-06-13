@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,7 +18,8 @@ namespace Snake3D
         [Header("Button")]
         [SerializeField] private Button m_quitBtn;
 
-       
+        [Header("Game End Screen")]
+        [SerializeField] private GameObject m_gameEndScreen;
 
         private void OnEnable()
         {
@@ -64,7 +66,7 @@ namespace Snake3D
 
                 }
                 m_countdownHolder.SetActive(false);
-                GameManager.Instance.HasGameStarted = true;
+                GamePlayController.Instance.HasGameStarted = true;
             }
         }
         #endregion
@@ -73,8 +75,14 @@ namespace Snake3D
 
         void OnQuitBtnTapped()
         {
+            PhotonNetwork.Disconnect();
             SceneManager.LoadScene(GameConstants.kMenuScene);
         }
         #endregion
+
+        public void ShowGameEndScreen()
+        {
+            m_gameEndScreen.SetActive(true);
+        }
     }
 }

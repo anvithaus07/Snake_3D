@@ -19,16 +19,21 @@ namespace Snake3D
         [SerializeField] private Button m_joinRoomBtn;
         [SerializeField] private InputField m_roomCodeIp;
 
+        [Header("Back Button")]
+        [SerializeField] private Button m_backBtn;
+
         public override void OnEnable()
         {
             m_createRoomBtn.onClick.AddListener(OnCreateRoomBtnClicked);
             m_joinRoomBtn.onClick.AddListener(OnJoinRoomBtnClicked);
+            m_backBtn.onClick.AddListener(OnBackBtnClicked);
             base.OnEnable();
         }
         public override void OnDisable()
         {
             m_createRoomBtn.onClick.RemoveAllListeners();
             m_joinRoomBtn.onClick.RemoveAllListeners();
+            m_backBtn.onClick.RemoveAllListeners();
 
             base.OnDisable();
         }
@@ -51,6 +56,10 @@ namespace Snake3D
             {
                 PhotonNetwork.JoinRoom(m_roomCodeIp.text);
             }
+            else
+            {
+                Debug.Log("Photon Network is not connected");
+            }
         }
 
         public override void OnCreatedRoom()
@@ -60,6 +69,28 @@ namespace Snake3D
         public override void OnJoinedRoom()
         {
             Debug.Log("OnJoinedRoom OnJoinedRoom " + PhotonNetwork.CurrentRoom.PlayerCount);
+            TakePlayerToGame();
+        }
+
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            base.OnJoinRoomFailed(returnCode, message);
+            Debug.Log("OnJoinRoomFailed OnJoinRoomFailed " + message);
+        }
+
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            Debug.Log("OnPlayerEnteredRoom OnPlayerEnteredRoom " + PhotonNetwork.CurrentRoom.PlayerCount);
+            TakePlayerToGame();
+        }
+        void OnBackBtnClicked()
+        {
+            PhotonNetwork.Disconnect();
+            SceneManager.LoadScene(GameConstants.kMenuScene);
+        }
+
+        void TakePlayerToGame()
+        {
             if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
             {
                 SceneManager.LoadScene(GameConstants.kSinglePlayerGameScene);

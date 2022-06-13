@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Snake3D
@@ -6,17 +7,20 @@ namespace Snake3D
     public class SnakeHandler : MonoBehaviour
     {
         [SerializeField] private Transform m_snakeBodySegment;
-        [SerializeField] private PlayerInputHandler m_playerInputHandler;
+        [SerializeField] private PhotonView m_photonView;
 
         private List<Transform> mSnakeSegments = new List<Transform>();
 
         private int mInitializeSnakeSegmentCount = 5;
-
-        
+        PlayMode mPlayMode;
+        private void Start()
+        {
+            mPlayMode = GameManager.Instance().PlayMode;
+        }
 
         private void FixedUpdate()
         {
-            if (!GameManager.Instance.HasGameEnded && GameManager.Instance.HasGameStarted)
+            if (!GamePlayController.Instance.HasGameEnded && GamePlayController.Instance.HasGameStarted)
             {
                 for (int i = mSnakeSegments.Count - 1; i > 0; i--)
                 {
@@ -24,16 +28,19 @@ namespace Snake3D
 
                 }
                 Vector3 currentPos = this.transform.position;
-                float currectXpos = Mathf.Round(currentPos.x) + m_playerInputHandler.PlayerInputDirection.x;
-                float currectZpos = Mathf.Round(currentPos.z) + m_playerInputHandler.PlayerInputDirection.y;
-
-                transform.position = new Vector3(currectXpos,0.0f, currectZpos);
+                if ((mPlayMode == PlayMode.MultiPlayer && m_photonView.IsMine) || mPlayMode == PlayMode.SinglePlayer)
+                {
+                    float currectXpos = Mathf.Round(currentPos.x) + PlayerInputHandler.Instance.PlayerInputDirection.x;
+                    float currectZpos = Mathf.Round(currentPos.z) + PlayerInputHandler.Instance.PlayerInputDirection.y;
+                    transform.position = new Vector3(currectXpos, 0.0f, currectZpos);
+                }
             }
+
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!GameManager.Instance.HasGameEnded && GameManager.Instance.HasGameStarted)
+            if (!GamePlayController.Instance.HasGameEnded && GamePlayController.Instance.HasGameStarted)
             {
                 if (other.tag == GameConstants.kMovingFoodTag || other.tag == GameConstants.kStaticFoodTag)
                 {
@@ -41,7 +48,7 @@ namespace Snake3D
                 }
                 if (other.tag == GameConstants.kObstacleTag)
                 {
-                    GameManager.Instance.HasGameEnded = true;
+                    GamePlayController.Instance.HasGameEnded = true;
                     StartCoroutine(ShowCollidedEffect());
                 }
             }
@@ -54,12 +61,14 @@ namespace Snake3D
 
         public void InitailizeSnake()
         {
-            GameManager.Instance.HasGameEnded = false;
+            GamePlayController.Instance.HasGameEnded = false;
             mSnakeSegments = new List<Transform>();
             mSnakeSegments.Add(this.transform);
             PlayerDataHandler.Instance().CurrentScore = 0;
 
-            this.transform.position = new Vector3(1, 0, -10);
+            if (mPlayMode == PlayMode.SinglePlayer)
+                this.transform.position = new Vector3(1, 0, -10);
+            
             for (int i = 0; i < mInitializeSnakeSegmentCount; i++)
             {
                 AddSegementToSnake();
@@ -80,7 +89,7 @@ namespace Snake3D
             mSnakeSegments.Clear();
             mSnakeSegments.Add(this.transform);
 
-            GameManager.Instance.StartGame();
+            GamePlayController.Instance.ShowGameEndScreen();
         }
     }
 }

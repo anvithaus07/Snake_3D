@@ -24,6 +24,8 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
+    PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
     - Photon.Pun.PhotonRigidbodyView
@@ -96,6 +98,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2914}
     - Class: 114
+      Script: {instanceID: 3142}
+    - Class: 114
       Script: {instanceID: 3150}
     - Class: 114
       Script: {instanceID: 3248}
@@ -107,6 +111,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 4462}
     - Class: 114
       Script: {instanceID: 4642}
+    - Class: 114
+      Script: {instanceID: 4782}
     - Class: 114
       Script: {instanceID: 4910}
     - Class: 115
@@ -244,6 +250,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2710}
     - Class: 114
+      Script: {instanceID: 2890}
+    - Class: 114
       Script: {instanceID: 2904}
     - Class: 114
       Script: {instanceID: 2914}
@@ -258,6 +266,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3630}
     - Class: 114
+      Script: {instanceID: 3636}
+    - Class: 114
       Script: {instanceID: 3760}
     - Class: 114
       Script: {instanceID: 4106}
@@ -269,6 +279,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 4318}
     - Class: 114
       Script: {instanceID: 4354}
+    - Class: 114
+      Script: {instanceID: 4642}
     - Class: 114
       Script: {instanceID: 4782}
     - Class: 114
@@ -1034,7 +1046,7 @@ ScriptsOnlyBuild:
     className: ReturnKeyTriggersButton
   - hash:
       serializedVersion: 2
-      Hash: 89ca0532d8c40bf390d1d4616a666397
+      Hash: 1f2fb24e7a2c110e0e0b5e9c828ff0c6
     assemblyName: Assembly-CSharp.dll
     namespaceName: Snake3D
     className: StaticFood
@@ -1262,7 +1274,7 @@ ScriptsOnlyBuild:
     className: UIScrollToSelectionXY
   - hash:
       serializedVersion: 2
-      Hash: 5404354832024e29a1ed18d9238fcd67
+      Hash: 02fbcaf191bcb2c00d2ecde17d0d5c37
     assemblyName: Assembly-CSharp.dll
     namespaceName: Snake3D
     className: CreateOrJoinRoomScreen
@@ -1442,7 +1454,7 @@ ScriptsOnlyBuild:
     className: DOTweenSettings
   - hash:
       serializedVersion: 2
-      Hash: 32a638f3abc13065233ecc70577d15a6
+      Hash: 3fc4059e768197b4c9a250d9e55fdd99
     assemblyName: Assembly-CSharp.dll
     namespaceName: Snake3D
     className: SnakeHandler
@@ -1994,7 +2006,7 @@ ScriptsOnlyBuild:
     className: ColorSlider
   - hash:
       serializedVersion: 2
-      Hash: 89ca0532d8c40bf390d1d4616a666397
+      Hash: 1f2fb24e7a2c110e0e0b5e9c828ff0c6
     assemblyName: Assembly-CSharp.dll
     namespaceName: Snake3D
     className: MovingFoodParticle
@@ -2114,7 +2126,7 @@ ScriptsOnlyBuild:
     className: PropertyCell
   - hash:
       serializedVersion: 2
-      Hash: d2e3708a77af908be468ba98047688b6
+      Hash: c517de41ed85b89adaad7f4e94ba7dc4
     assemblyName: Assembly-CSharp.dll
     namespaceName: Snake3D
     className: FoodHandler

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 namespace Snake3D
 {
     public class StaticFood : Food
     {
-
-        
         Action OnFoodConsumed;
         public override void OnTriggerEnter(Collider collision)
         {
@@ -21,7 +18,6 @@ namespace Snake3D
         public override void SpawnFood(Action onFoodConsumed)
         {
             OnFoodConsumed = onFoodConsumed;
-            transform.position = GetFoodSpawnPosition();
         }
     }
 

@@ -26,11 +26,13 @@ namespace Snake3D
 
         void OnSinglePlayerBtnClicked()
         {
+            GameManager.Instance().PlayMode = PlayMode.SinglePlayer;
             SceneManager.LoadScene(GameConstants.kSinglePlayerGameScene);
         }
 
         void OnMultiPlayerBtnClicked()
         {
+            GameManager.Instance().PlayMode = PlayMode.MultiPlayer;
             m_loadingIndicator.ShowLoadingIndiactor("Connecting...");
             m_photonConnector.ConnectToPhotonNetwork();
         }

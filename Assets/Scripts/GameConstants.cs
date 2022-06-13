@@ -19,4 +19,9 @@ namespace Snake3D
         public static string kMenuScene = "MainMenuScene";
         public static string kLobbyScene = "LobbyScene";
     }
+    public enum PlayMode
+    {
+        SinglePlayer,
+        MultiPlayer
+    }
 }
